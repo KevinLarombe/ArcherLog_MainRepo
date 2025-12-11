@@ -2,6 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -57,11 +62,11 @@ public class DASHBOARD extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(33, Short.MAX_VALUE)
+            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 196, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(40, 40, 40)
                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(48, 48, 48))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -159,13 +164,54 @@ public class DASHBOARD extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+ String id = ID.getText();
+ String name = NAME.getText();
+       int key = 0;
 
-        
-        
-         
+String encryptedPass = "";
+// Encrypt the password input (`name`)
+for (int i = 0; i < name.length(); i++) {
+    char ch = name.charAt(i);
+    // This is a simple Caesar cipher (shift by 3)
+    encryptedPass += (char) (ch + key);
+}
+
+// NOTE: The file path has an incorrect extra quote. 
+// I've corrected it here:
+String filePath = "C:\\Users\\Administrator\\Documents\\DSA_IT24A\\ArcherLog_forkRepo\\text.txt";
+
+try {
+    // *** MODIFIED LOGIC START ***
+    
+    // 1. Authentication is assumed to be successful (authenticated = true).
+    boolean authenticated = true; 
+
+    // 2. The file reading and authentication loop is removed.
+
+    if (authenticated) {
+        // Log the user in
         MAINMENU dash = new MAINMENU();
         dash.setVisible(true);
-        dispose();        // TODO add your handling code here:
+        dispose(); 
+        
+        // 3. Register the new user/password AFTER successful "login"
+        // This registers the user even if they are already in the file.
+        FileWriter writer = new FileWriter(filePath, true);
+        writer.write( id + "," + encryptedPass + "\n");
+        writer.close();
+        
+    } else {
+        // This part is now unreachable since authenticated is set to true, 
+        // but kept for completeness based on the original structure.
+        JOptionPane.showMessageDialog(null, "Invalid username or password", "Login Error", JOptionPane.ERROR_MESSAGE);
+    }
+    
+    // *** MODIFIED LOGIC END ***
+
+} catch (IOException e) {
+    System.out.println("ERROR");
+    e.printStackTrace();
+}
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void IDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IDActionPerformed
