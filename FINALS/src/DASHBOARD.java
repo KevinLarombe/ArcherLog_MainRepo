@@ -193,7 +193,7 @@ try {
        boolean authenticated = true; 
 
     if (authenticated) {
-        MAINMENU dash = new MAINMENU();
+        main_menu dash = new main_menu();
         dash.setVisible(true);
         dispose(); 
         
